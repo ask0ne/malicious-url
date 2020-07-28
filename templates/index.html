@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+            form {
+                margin: auto;
+                padding: 5%;
+            }.result {
+                margin: auto;
+                width: 35%;
+                border: 1px solid #ccc;
+            }
+        </style>
+        <title>SafeSearch</title>
+    </head>
+    <div class="result" align="center">
+        <form action="{{ url_for('main') }}" method="POST">
+            <input name="query" required>
+            <button type="submit">SUBMIT</button>
+        </form>
+        {% if result %}
+            <br>Result
+               <p style="font-size:50px">{{ result }}</p>
+        {% endif %}
+    </div>
+</html>
