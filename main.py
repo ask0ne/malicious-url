@@ -18,18 +18,20 @@ def main():
         return flask.render_template('index.html', result=None)
     if flask.request.method == 'POST':
         query = flask.request.form['query']
-        prediction = query
+        prediction = predict(query)
         return flask.render_template('index.html', result=prediction)
 
 
 @FLASK_APP.route('/predict', methods=['POST'])
-def predict():
+def predict(query):
     '''
      json = request.json
      query_df = pd.DataFrame(json_)
      query = pd.get_dummies(query_df)
      prediction = lr.predict(query)
      return jsonify({'prediction': list(prediction)}) '''
+    return query
+
 
 if __name__ == '__main__':
     FLASK_APP.run()
