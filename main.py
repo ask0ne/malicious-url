@@ -2,9 +2,24 @@
 URL APP
 '''
 import flask
-#import pickle
 from flask import Flask
+import pickle
 FLASK_APP = Flask(__name__, template_folder='templates')
+
+def makeTokens(f):
+    tkns_BySlash = str(f.encode('utf-8')).split('/')	# make tokens after splitting by slash
+    total_Tokens = []
+    for i in tkns_BySlash:
+        tokens = str(i).split('-')	# make tokens after splitting by dash
+        tkns_ByDot = []
+        for j in range(0,len(tokens)):
+            temp_Tokens = str(tokens[j]).split('.')	# make tokens after splitting by dot
+            tkns_ByDot = tkns_ByDot + temp_Tokens
+        total_Tokens = total_Tokens + tokens + tkns_ByDot
+    total_Tokens = list(set(total_Tokens))	#remove redundant tokens
+    if 'com' in total_Tokens:
+        total_Tokens.remove('com')	#removing .com since it occurs a lot of times and it should not be included in our features
+    return total_Tokens
 
 
 @FLASK_APP.route("/", methods=['GET', 'POST'])
@@ -25,13 +40,19 @@ def main():
 @FLASK_APP.route('/predict', methods=['POST'])
 def predict(query):
     '''
-     json = request.json
-     query_df = pd.DataFrame(json_)
-     query = pd.get_dummies(query_df)
-     prediction = lr.predict(query)
-     return jsonify({'prediction': list(prediction)}) '''
-    return query
-
+    Load pretrained scikit-learn model, evaluate input URL and output prediction
+    '''
+     # load the vectorizer
+    loaded_vectorizer = pickle.load(open('vectorizer.pickle', 'rb'))
+    # load the model
+    loaded_model = pickle.load(open('classification.model', 'rb'))
+    result = loaded_model.predict(loaded_vectorizer.transform([query]))
+    print(result)
+    if result[0] == 'benign':
+        result = 'SAFE :)'
+    else:
+        result = 'NOT SAFE :('
+    return result
 
 if __name__ == '__main__':
     FLASK_APP.run()

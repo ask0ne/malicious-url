@@ -7,6 +7,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
         <style>
+            body{
+                background-color: #eaeaea;
+            }
             input[type=text] {
                 width: 100%;
                 padding: 12px 20px;
@@ -16,14 +19,13 @@
             }
 
             .button {
-                background-color: #4CAF50; /* Green */
+                background-color: #0e3b43;
                 border: none;
-                color: white;
+                color: snow;
                 padding: 15px 32px;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                font-size: 16px;
                 margin: 4px 2px;
                 border-radius: 5px;
                 cursor: pointer;
@@ -42,6 +44,11 @@
                 padding: 0px;
             }
 
+            p.results{
+                font-size: 2rem;
+                font-weight: bold;
+            }
+
             h1.logo{
                 margin-top: 10%;
                 text-align:center;
@@ -49,7 +56,7 @@
             }
 
             .footer{
-                background-color: whitesmoke;
+                background-color ;
                 text-align: center;
                 padding: 1rem;
                 bottom: 0px;
@@ -65,12 +72,12 @@
                 <form action="{{ url_for('main') }}" method="POST">
                     <div class="row">
                         <div class="col-11 container-fluid"><input type="text" name="query" class="form-group" placeholder="Enter URL"></div>
-                        <div class="col-1 container"><button class="button" type="submit">SUBMIT</button></div>
+                        <div class="col-1 container"><button class="button" type="submit">Check</button></div>
                     </div>
                 </form>
                 {% if result %}
-                    <br>Result
-                    <p style="font-size:50px">{{ result }}</p>
+                    <br>The URL is
+                    <p class="results">{{ result }}</p>
                 {% endif %}
         </div>
         <div class="footer container-fluid">

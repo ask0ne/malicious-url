@@ -1,2 +1,5 @@
 urldata.csv
 .ipynb_checkpoints/build-checkpoint.ipynb
+vectorizer.pickle
+classification.model
+report/
