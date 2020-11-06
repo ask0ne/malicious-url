@@ -1,9 +1,10 @@
 '''
 URL APP
 '''
+import pickle
 import flask
 from flask import Flask
-import pickle
+
 FLASK_APP = Flask(__name__, template_folder='templates')
 
 def makeTokens(f):
@@ -17,8 +18,12 @@ def makeTokens(f):
             tkns_ByDot = tkns_ByDot + temp_Tokens
         total_Tokens = total_Tokens + tokens + tkns_ByDot
     total_Tokens = list(set(total_Tokens))	#remove redundant tokens
+    if 'www' in total_Tokens:
+        total_Tokens.remove('www')	#removing .com since it occurs a lot of times and it should not be included in our features
     if 'com' in total_Tokens:
-        total_Tokens.remove('com')	#removing .com since it occurs a lot of times and it should not be included in our features
+        total_Tokens.remove('com')
+    if 'http' in total_Tokens:
+        total_Tokens.remove('http')
     return total_Tokens
 
 
